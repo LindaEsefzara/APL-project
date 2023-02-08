@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <style>
+        .error {
+            color: red;
+        }
+    </style>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous" />
+</head>
+<body>
+
+<div class=" d-flex justify-content-center">
+
+  <form class="m-4" th:action="@{/register}" th:object="${user}" method="post">
+
+    <div class="m-4">
+      <p>Username:</p>
+      <input th:field="*{username}" type="text" placeholder="write your username here...">
+
+      <p th:if="${ #fields.hasErrors('username') }"
+         th:errors="*{username}"
+         th:errorclass="error"
+      ></p>
+    </div>
+
+    <div class="m-4">
+      <p>Password:</p>
+      <input th:field="*{password}" type="password" placeholder="write your password here...">
+    </div>
+
+    <div class="m-4">
+      <p>Email:</p>
+      <input th:field="*{email}" type="email" placeholder="write your email here...">
+    </div>
+
+    <!-- Role Input -->
+    <div class="m-4 dropdown d-flex">
+
+      <select class="btn btn-primary dropdown-toggle" th:field="*{authorities}" >
+        <option class="dropdown-item" th:text="Admin" value="Admin"></option>
+        <option class="dropdown-item" th:text="User" value="User"></option>
+      </select>
+
+    </div>
+
+    <div>
+      <ul>
+        <li th:each="error : ${#fields.errors('password')}"
+            th:text="${error}"
+            class="error">
+        </li>
+      </ul>
+    </div>
+    <div class="d-flex justify-content-center p-5">
+      <input type="submit" value="Register" class="btn btn-primary" >
+    </div>
+  </form>
+
+
+</div>
+
+</body>
